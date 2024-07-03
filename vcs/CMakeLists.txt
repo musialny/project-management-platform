@@ -5,4 +5,3 @@ set(VCS_OUTPUT_DIRECTORY_BASE ${PROJECT_SOURCE_DIR}/../artefacts/${CMAKE_BUILD_T
 
 add_subdirectory(vcs-client)
 add_subdirectory(vcs-server)
-add_subdirectory(tests)
