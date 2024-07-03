@@ -1,0 +1,17 @@
+{
+  "name": "vcs",
+  "version-string": "0.1.0",
+  "dependencies": [
+    {
+      "name": "gtest",
+      "version>=": "1.14.0"
+    }
+  ],
+  "builtin-baseline": "101cc9a69a1061969caf4b73579a34873fdd60fe",
+  "overrides": [
+    {
+      "name": "gtest",
+      "version": "1.14.0"
+    }
+  ]
+}
