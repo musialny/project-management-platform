@@ -1,6 +1,6 @@
-import core;
+import vcs.client.cli;
 
-int main() {
-    core::hello_there();
+int main(int argc, const char* argv[]) {
+    vcs::client::cli::CliCommandExecutor<1> commandExecutor { argc, argv };
     return 0;
 }
