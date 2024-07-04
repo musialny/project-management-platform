@@ -8,6 +8,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-client/l
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-client/shared)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-client/bin)
 
-add_executable(vcs-client "src/main.cc")
+add_executable(vcs-client)
+target_sources(vcs-client
+        PRIVATE src/main.cpp
+        PRIVATE FILE_SET CXX_MODULES FILES
+        src/core.ixx
+)
 
 add_subdirectory(tests)

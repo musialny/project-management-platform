@@ -8,7 +8,7 @@ enable_testing()
 
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(vcs-client-tests "test.cc")
+add_executable(vcs-client-tests test.cpp)
 target_link_libraries(
         vcs-client-tests PRIVATE
         GTest::gtest_main
