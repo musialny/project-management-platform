@@ -13,7 +13,7 @@ namespace vcs::client::cli {
     export class CliActionsContainer {
         std::vector<CliAction> actions;
     public:
-        explicit CliActionsContainer(std::initializer_list<CliAction> actionsList) {
+        explicit CliActionsContainer(const std::initializer_list<CliAction>& actionsList) {
             for (const auto& action : actionsList)
                 actions.emplace_back(action);
         }
