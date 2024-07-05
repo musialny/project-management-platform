@@ -9,7 +9,7 @@ export module vcs.client.CliActionsContainer;
 import vcs.client.CliCommandExecutor;
 
 namespace vcs::client::cli {
-    export using CliAction = void (*)(const CommandsArray& args);
+    export using CliAction = void (*)(const CommandParameters& args);
 
     export class CliActionsContainer {
         std::vector<CliAction> actions;
