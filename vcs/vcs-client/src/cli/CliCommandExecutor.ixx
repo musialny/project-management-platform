@@ -2,9 +2,8 @@ module;
 
 #include <string_view>
 #include <vector>
-#include <initializer_list>
 
-export module vcs.client.cli;
+export module vcs.client.CliCommandExecutor;
 
 namespace vcs::client::cli {
     export using CommandsArray = std::vector<std::string_view>;
@@ -20,17 +19,6 @@ namespace vcs::client::cli {
         explicit CliCommandExecutor(const CliArgs&& args) {
             for (size_t i = offset; i < args.argc; i++)
                 rawCommands.emplace_back(args.argv[i]);
-        }
-    };
-
-    export using CliAction = void (*)(const CommandsArray& args);
-
-    export class CliActionsContainer {
-        std::vector<CliAction> actions;
-    public:
-        explicit CliActionsContainer(std::initializer_list<CliAction> actionsList) {
-            for (const auto& action : actionsList)
-                actions.emplace_back(action);
         }
     };
 }

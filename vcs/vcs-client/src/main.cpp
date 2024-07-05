@@ -1,4 +1,4 @@
-import vcs.client.cli;
+import vcs.client.Cli;
 
 int main(int argc, const char* argv[]) {
     vcs::client::cli::CliActionsContainer actionsContainer {

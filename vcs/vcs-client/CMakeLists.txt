@@ -12,7 +12,9 @@ add_executable(vcs-client)
 target_sources(vcs-client
         PRIVATE src/main.cpp
         PRIVATE FILE_SET CXX_MODULES FILES
-        src/cli.ixx
+        src/cli/cli.ixx
+        src/cli/CliCommandExecutor.ixx
+        src/cli/CliActionsContainer.ixx
 )
 
 add_subdirectory(tests)
