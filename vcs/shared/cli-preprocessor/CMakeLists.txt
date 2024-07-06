@@ -12,9 +12,9 @@ add_library(vcs-shared-cli-preprocessor STATIC)
 target_compile_features(vcs-shared-cli-preprocessor PUBLIC cxx_std_20)
 target_sources(vcs-shared-cli-preprocessor
         PUBLIC FILE_SET CXX_MODULES FILES
-        src/CliPreprocessor.cppm
-        src/CliCommandExecutor.cppm
-        src/CliActionsContainer.cppm
+            src/CliPreprocessor.cppm
+            src/CliCommandExecutor.cppm
+            src/CliActionsContainer.cppm
 )
 
 add_subdirectory(tests)

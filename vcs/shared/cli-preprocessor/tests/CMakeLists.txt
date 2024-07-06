@@ -8,7 +8,10 @@ enable_testing()
 
 find_package(GTest CONFIG REQUIRED)
 
-add_executable(vcs-shared-cli-preprocessor-tests test.cpp)
+add_executable(vcs-shared-cli-preprocessor-tests)
+target_sources(vcs-shared-cli-preprocessor-tests
+        PRIVATE test.cpp
+)
 target_link_libraries(
         vcs-shared-cli-preprocessor-tests PRIVATE
         GTest::gtest_main
