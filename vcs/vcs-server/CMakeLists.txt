@@ -10,9 +10,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-server/b
 
 add_executable(vcs-server)
 target_sources(vcs-server
-        PRIVATE src/main.cpp
+        PRIVATE
+            src/main.cpp
         PRIVATE FILE_SET CXX_MODULES FILES
-        src/core.ixx
+            src/core.cppm
 )
 
 add_subdirectory(tests)

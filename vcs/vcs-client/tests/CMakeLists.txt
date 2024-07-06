@@ -10,12 +10,13 @@ find_package(GTest CONFIG REQUIRED)
 
 add_executable(vcs-client-tests)
 target_sources(vcs-client-tests
-        PRIVATE test.cpp
+        PRIVATE
+            test.cpp
 )
-target_link_libraries(
-        vcs-client-tests PRIVATE
-        GTest::gtest_main
-        GTest::gmock
+target_link_libraries(vcs-client-tests
+        PRIVATE
+            GTest::gtest_main
+            GTest::gmock
 )
 
 include(GoogleTest)
