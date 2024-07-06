@@ -11,10 +11,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-client/b
 add_executable(vcs-client)
 target_sources(vcs-client
         PRIVATE src/main.cpp
-        PRIVATE FILE_SET CXX_MODULES FILES
-        src/cli/cli.cppm
-        src/cli/CliCommandExecutor.cppm
-        src/cli/CliActionsContainer.cppm
+)
+target_link_libraries(vcs-client
+        PRIVATE vcs-shared-cli-preprocessor
 )
 
 add_subdirectory(tests)

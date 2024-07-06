@@ -1,13 +1,13 @@
-import vcs.client.Cli;
+import vcs.shared.cli_preprocessor;
 
 int main(const int argc, const char* argv[]) {
-    vcs::client::cli::CliActionsContainer actionsContainer {
-        [](const vcs::client::cli::CommandParameters& commandsArray) {
+    vcs::shared::cli_preprocessor::CliActionsContainer actionsContainer {
+        [](const vcs::shared::cli_preprocessor::CommandParameters& commandsArray) {
 
         }
     };
 
-    vcs::client::cli::CliCommandExecutor<1> commandExecutor {
+    vcs::shared::cli_preprocessor::CliCommandExecutor<1> commandExecutor {
         {argc, argv}
     };
     return 0;

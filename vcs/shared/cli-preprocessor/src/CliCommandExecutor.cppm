@@ -3,9 +3,9 @@ module;
 #include <string_view>
 #include <vector>
 
-export module vcs.client.CliCommandExecutor;
+export module vcs.shared.cli_preprocessor.CliCommandExecutor;
 
-namespace vcs::client::cli {
+namespace vcs::shared::cli_preprocessor {
     export using CommandParameters = std::vector<std::string_view>;
     export struct CliArgs {
         int argc;

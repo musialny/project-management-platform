@@ -3,11 +3,11 @@ module;
 #include <vector>
 #include <initializer_list>
 
-export module vcs.client.CliActionsContainer;
+export module vcs.shared.cli_preprocessor.CliActionsContainer;
 
-import vcs.client.CliCommandExecutor;
+import vcs.shared.cli_preprocessor.CliCommandExecutor;
 
-namespace vcs::client::cli {
+namespace vcs::shared::cli_preprocessor {
     export using CliAction = void (*)(const CommandParameters& args);
 
     export class CliActionsContainer {
