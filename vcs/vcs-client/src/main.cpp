@@ -7,8 +7,11 @@ int main(const int argc, const char* argv[]) {
         }
     };
 
-    vcs::shared::cli_preprocessor::CliCommandExecutor<1> commandExecutor {
-        {argc, argv}
+    vcs::shared::cli_preprocessor::CliCommandExecutor commandExecutor {
+        {
+            .amountOfArguments = argc,
+            .arguments = argv
+        }
     };
     return 0;
 }
