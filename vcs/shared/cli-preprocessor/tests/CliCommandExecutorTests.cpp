@@ -1,11 +1,14 @@
-#include <gtest/gtest.h>
 #include <vector>
 
-import vcs.shared.cli_preprocessor.CliCommandExecutor;
+#include <gtest/gtest.h>
+
+import vcs.shared.cli_preprocessor;
 
 using vcs::shared::cli_preprocessor::CliCommandExecutor;
+using vcs::shared::cli_preprocessor::CliActionsContainer;
 using vcs::shared::cli_preprocessor::CliArgs;
 using vcs::shared::cli_preprocessor::CommandParameters;
+using vcs::shared::cli_preprocessor::ExecutorArguments;
 
 class TestableCliCommandExecutor : public CliCommandExecutor {
 public:
@@ -26,7 +29,7 @@ TEST(CliCommandExecutor, InternalCommandStructureValidation) {
     };
     const std::vector<CommandParameters> reference {
         {"commit"},
-        { "--arg", "1"},
+        {"--arg", "1"},
         {"-a", "2"}
     };
 
@@ -39,4 +42,126 @@ TEST(CliCommandExecutor, InternalCommandStructureValidation) {
     const auto commands = commandExecutor.getCommands();
 
     EXPECT_EQ(reference, commands);
+}
+
+TEST(CliCommandExecutor, ExecutorResultValidation) {
+    ExecutorArguments commandArguments;
+    ExecutorArguments commandArgumentsReference = {
+        {"commit", {"commit"}},
+        {"--message", {"--message", "Commit", "Message"}}
+    };
+    const char* commandArgumentsArguments[] = {
+        "commit",
+        "--message", "Commit", "Message"
+    };
+    const CliCommandExecutor commandArgumentsCommandExecutor {
+            {
+                .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
+                .arguments = commandArgumentsArguments
+            }
+    };
+
+    const CliActionsContainer commands = {
+        {
+            {
+                .command = "commit",
+                .arguments = {
+                    {
+                        .argument = "--message",
+                        .aliases = {"-m", "-M"}
+                    }
+                },
+                .executor = [&](const ExecutorArguments& arguments) -> int {
+                    commandArguments = arguments;
+                    return 0;
+                }
+            }
+        }
+    };
+
+    commandArgumentsCommandExecutor(commands);
+    EXPECT_EQ(commandArgumentsReference, commandArguments);
+}
+
+TEST(CliCommandExecutor, ExecutorResultAliasValidation) {
+    ExecutorArguments commandArguments;
+    ExecutorArguments commandArgumentsReference = {
+        {"commit", {"commit"}},
+        {"--message", {"-m", "Commit", "Message"}}
+    };
+    const char* commandArgumentsArguments[] = {
+        "commit",
+        "-m", "Commit", "Message"
+    };
+    const CliCommandExecutor commandArgumentsCommandExecutor {
+        {
+            .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
+            .arguments = commandArgumentsArguments
+        }
+    };
+
+    const CliActionsContainer commands = {
+        {
+            {
+                .command = "commit",
+                .arguments = {
+                    {
+                        .argument = "--message",
+                        .aliases = {"-m", "-M"}
+                    }
+                },
+                .executor = [&](const ExecutorArguments& arguments) -> int {
+                    commandArguments = arguments;
+                    return 0;
+                }
+            }
+        }
+    };
+
+    commandArgumentsCommandExecutor(commands);
+    EXPECT_EQ(commandArgumentsReference, commandArguments);
+}
+
+TEST(CliCommandExecutor, ExecutorResultEmptyCommandValidation) {
+    ExecutorArguments commandArguments;
+    ExecutorArguments commandArgumentsReference = {
+        {"", {""}},
+        {"--version", {"-v", "Random", "Things"}},
+        {"--user", {"--user", "John"}}
+    };
+    const char* commandArgumentsArguments[] = {
+        "-v", "Random", "Things",
+        "--user", "John"
+    };
+    const CliCommandExecutor commandArgumentsCommandExecutor {
+        {
+            .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
+            .arguments = commandArgumentsArguments
+        }
+    };
+
+    const CliActionsContainer commands = {
+        {
+            {
+                .command = "",
+                .arguments = {
+                    {
+                        .argument = "--version",
+                        .aliases = {"-v", "-V"}
+                    },
+                    {
+                        .argument = "--user",
+                        .aliases = {}
+                    }
+                },
+                .executor = [&](const ExecutorArguments& arguments) -> int {
+                    commandArguments = arguments;
+                    return 0;
+                }
+            }
+        }
+    };
+
+    commandArgumentsCommandExecutor(commands);
+    EXPECT_EQ(commandArgumentsReference, commandArguments);
 }

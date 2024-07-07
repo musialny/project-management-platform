@@ -11,8 +11,7 @@ find_package(GTest CONFIG REQUIRED)
 add_executable(vcs-shared-cli-preprocessor-tests)
 target_sources(vcs-shared-cli-preprocessor-tests
         PRIVATE
-            CliActionsContainerTests.cpp
-            CliCommandExecutorTests.cpp
+        CliCommandExecutorTests.cpp
 )
 target_link_libraries(vcs-shared-cli-preprocessor-tests
         PRIVATE

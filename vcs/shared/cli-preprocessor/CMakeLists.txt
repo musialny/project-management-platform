@@ -15,6 +15,7 @@ target_sources(vcs-shared-cli-preprocessor
             src/CliPreprocessor.cppm
             src/CliCommandExecutor.cppm
             src/CliActionsContainer.cppm
+            src/CliCommandParameters.cppm
 )
 
 add_subdirectory(tests)
