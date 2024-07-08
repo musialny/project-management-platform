@@ -1,4 +1,4 @@
-# C++ language project subset reference & code rules
+# C++ language project subset reference
 
 - Everything should be const, constexpr or consteval if possible
 - Every passed value should be const reference
