@@ -23,9 +23,19 @@ namespace vcs::shared::cli_preprocessor {
             result[command] = commands[0];
 
             for (size_t i = 1; i < commands.size(); i++) {
-                for (const auto& argumentName : argumentsNames) {
-                    if (commands[i][0] == argumentName.argument)
-                        result[argumentName.argument] = commands[i];
+                for (const auto& [argument, aliases] : argumentsNames) {
+                    if (commands[i][0] == argument) {
+                        result[argument] = commands[i];
+                        break;
+                    }
+                    bool nestedBreak = false;
+                    for (const auto& argumentAlias : aliases)
+                        if (commands[i][0] == argumentAlias) {
+                            result[argument] = commands[i];
+                            nestedBreak = true;
+                            break;
+                        }
+                    if (nestedBreak) break;
                 }
             }
 
