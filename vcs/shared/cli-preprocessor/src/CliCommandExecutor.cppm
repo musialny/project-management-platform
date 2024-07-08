@@ -52,6 +52,7 @@ namespace vcs::shared::cli_preprocessor {
                 params.emplace_back(args.arguments[i]);
             }
             if (!params.empty()) commands.emplace_back(params);
+            if (commands.empty()) commands.resize(1);
             if (commands[0].empty()) commands[0].emplace_back("");
         }
 

@@ -27,7 +27,7 @@ namespace vcs::shared::cli_preprocessor {
     export class CliActionsContainer {
         std::vector<CliAction> actions;
     public:
-        CliActionsContainer(std::vector<CliAction>&& actions) : actions(std::move(actions)) {}
+        explicit CliActionsContainer(std::vector<CliAction>&& actions) : actions(std::move(actions)) {}
 
         const std::vector<CliAction>& getActions() const {
             return actions;

@@ -1,4 +1,5 @@
 #include <vector>
+#include <array>
 
 #include <gtest/gtest.h>
 
@@ -21,11 +22,10 @@ public:
 };
 
 TEST(CliCommandExecutor, InternalCommandStructureValidation) {
-    constexpr int amountOfArguments {5};
-    const char* arguments[] = {
+    constexpr std::array arguments {
         "commit",
         "--arg", "1",
-        "-a", "2",
+        "-a", "2"
     };
     const std::vector<CommandParameters> reference {
         {"commit"},
@@ -35,8 +35,8 @@ TEST(CliCommandExecutor, InternalCommandStructureValidation) {
 
     TestableCliCommandExecutor commandExecutor {
         {
-                .amountOfArguments = amountOfArguments,
-                .arguments = arguments
+            .amountOfArguments = arguments.size(),
+            .arguments = arguments.data()
         }
     };
     const auto commands = commandExecutor.getCommands();
@@ -46,29 +46,29 @@ TEST(CliCommandExecutor, InternalCommandStructureValidation) {
 
 TEST(CliCommandExecutor, ExecutorResultValidation) {
     ExecutorArguments commandArguments;
-    ExecutorArguments commandArgumentsReference = {
+    ExecutorArguments commandArgumentsReference {
         {"commit", {"commit"}},
         {"--message", {"--message", "Commit", "Message"}}
     };
-    const char* commandArgumentsArguments[] = {
+    constexpr std::array commandArgumentsArguments {
         "commit",
         "--message", "Commit", "Message"
     };
     const CliCommandExecutor commandArgumentsCommandExecutor {
-            {
-                .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
-                .arguments = commandArgumentsArguments
-            }
+        {
+            .amountOfArguments = commandArgumentsArguments.size(),
+            .arguments = commandArgumentsArguments.data()
+        }
     };
 
-    const CliActionsContainer commands = {
+    const CliActionsContainer commands {
         {
             {
                 .command = "commit",
-                .arguments = {
+                .arguments {
                     {
                         .argument = "--message",
-                        .aliases = {"-m", "-M"}
+                        .aliases {"-m", "-M"}
                     }
                 },
                 .executor = [&](const ExecutorArguments& arguments) -> int {
@@ -85,29 +85,29 @@ TEST(CliCommandExecutor, ExecutorResultValidation) {
 
 TEST(CliCommandExecutor, ExecutorResultAliasValidation) {
     ExecutorArguments commandArguments;
-    ExecutorArguments commandArgumentsReference = {
+    ExecutorArguments commandArgumentsReference {
         {"commit", {"commit"}},
         {"--message", {"-m", "Commit", "Message"}}
     };
-    const char* commandArgumentsArguments[] = {
+    constexpr std::array commandArgumentsArguments {
         "commit",
         "-m", "Commit", "Message"
     };
     const CliCommandExecutor commandArgumentsCommandExecutor {
         {
-            .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
-            .arguments = commandArgumentsArguments
+            .amountOfArguments = commandArgumentsArguments.size(),
+            .arguments = commandArgumentsArguments.data()
         }
     };
 
-    const CliActionsContainer commands = {
+    const CliActionsContainer commands {
         {
             {
                 .command = "commit",
-                .arguments = {
+                .arguments {
                     {
                         .argument = "--message",
-                        .aliases = {"-m", "-M"}
+                        .aliases {"-m", "-M"}
                     }
                 },
                 .executor = [&](const ExecutorArguments& arguments) -> int {
@@ -124,34 +124,73 @@ TEST(CliCommandExecutor, ExecutorResultAliasValidation) {
 
 TEST(CliCommandExecutor, ExecutorResultEmptyCommandValidation) {
     ExecutorArguments commandArguments;
-    ExecutorArguments commandArgumentsReference = {
+    ExecutorArguments commandArgumentsReference {
         {"", {""}},
         {"--version", {"-v", "Random", "Things"}},
         {"--user", {"--user", "John"}}
     };
-    const char* commandArgumentsArguments[] = {
+    constexpr std::array commandArgumentsArguments {
         "-v", "Random", "Things",
         "--user", "John"
     };
     const CliCommandExecutor commandArgumentsCommandExecutor {
         {
-            .amountOfArguments = sizeof(commandArgumentsArguments) / sizeof(char*),
-            .arguments = commandArgumentsArguments
+            .amountOfArguments = commandArgumentsArguments.size(),
+            .arguments = commandArgumentsArguments.data()
         }
     };
 
-    const CliActionsContainer commands = {
+    const CliActionsContainer commands {
         {
             {
                 .command = "",
-                .arguments = {
+                .arguments {
                     {
                         .argument = "--version",
-                        .aliases = {"-v", "-V"}
+                        .aliases {"-v", "-V"}
                     },
                     {
                         .argument = "--user",
-                        .aliases = {}
+                        .aliases {}
+                    }
+                },
+                .executor = [&](const ExecutorArguments& arguments) -> int {
+                    commandArguments = arguments;
+                    return 0;
+                }
+            }
+        }
+    };
+
+    commandArgumentsCommandExecutor(commands);
+    EXPECT_EQ(commandArgumentsReference, commandArguments);
+}
+
+TEST(CliCommandExecutor, ExecutorResultEmptyCommandWithoutArgumentsValidation) {
+    ExecutorArguments commandArguments;
+    ExecutorArguments commandArgumentsReference {
+        {"", {""}}
+    };
+    constexpr std::array<const char*, 0> commandArgumentsArguments {};
+    const CliCommandExecutor commandArgumentsCommandExecutor {
+        {
+            .amountOfArguments = commandArgumentsArguments.size(),
+            .arguments = commandArgumentsArguments.data()
+        }
+    };
+
+    const CliActionsContainer commands {
+        {
+            {
+                .command = "",
+                .arguments {
+                    {
+                        .argument = "--version",
+                        .aliases {"-v", "-V"}
+                    },
+                    {
+                        .argument = "--user",
+                        .aliases {}
                     }
                 },
                 .executor = [&](const ExecutorArguments& arguments) -> int {

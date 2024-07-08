@@ -4,6 +4,7 @@ import vcs.shared.cli_preprocessor;
 
 using vcs::shared::cli_preprocessor::ExecutorArguments;
 using vcs::shared::cli_preprocessor::CliCommandExecutor;
+using vcs::shared::cli_preprocessor::CliActionsContainer;
 
 int main(const int argc, const char* argv[]) {
     const CliCommandExecutor commandExecutor {
@@ -13,14 +14,14 @@ int main(const int argc, const char* argv[]) {
         }
     };
 
-    return commandExecutor({
+    return commandExecutor(CliActionsContainer {
         {
             {
                 .command = "commit",
-                .arguments = {
+                .arguments {
                     {
                         .argument = "--message",
-                        .aliases = {"-m", "-M"}
+                        .aliases {"-m", "-M"}
                     }
                 },
                 .executor = [](const ExecutorArguments& arguments) {
