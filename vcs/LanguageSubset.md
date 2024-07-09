@@ -6,3 +6,4 @@
 - () is reserved for function (or callable objects) calls and arithmetic operation
 - Every constructor have to be explicit
 - Every User-defined conversion have to be explicit
+- Using namespace is forbidden
