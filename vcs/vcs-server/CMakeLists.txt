@@ -15,7 +15,13 @@ target_sources(vcs-server
         PRIVATE
             src/main.cpp
         PRIVATE FILE_SET CXX_MODULES FILES
-            src/core.cppm
+            src/commands/Version.cppm
+            src/commands/Commands.cppm
+)
+
+target_link_libraries(vcs-server
+        PRIVATE
+            vcs-shared-cli-preprocessor
 )
 
 add_subdirectory(tests)
