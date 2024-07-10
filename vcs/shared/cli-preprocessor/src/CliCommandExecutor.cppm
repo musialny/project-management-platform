@@ -58,10 +58,9 @@ namespace vcs::shared::cli_preprocessor {
         }
 
         int operator()(const CliActionsContainer& actionsContainer) const {
-            const auto& actions = actionsContainer.getActions();
-            for (const auto& action : actions)
-                if (action.command == commands[0][0])
-                    return action.executor(generateExecutorArguments(action.command, action.arguments));
+            for (const auto& [command, arguments, executor] : actionsContainer.getActions())
+                if (command == commands[0][0])
+                    return executor(generateExecutorArguments(command, arguments));
             return -1;
         }
     };
