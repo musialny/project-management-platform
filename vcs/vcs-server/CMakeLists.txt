@@ -8,6 +8,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-server/l
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-server/shared)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${VCS_OUTPUT_DIRECTORY_BASE}/vcs/vcs-server/bin)
 
+add_definitions(-DVCS_VERSION="${CMAKE_PROJECT_VERSION}")
+
 add_executable(vcs-server)
 target_sources(vcs-server
         PRIVATE

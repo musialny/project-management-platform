@@ -1,10 +1,9 @@
-#include <iostream>
-
 import vcs.shared.cli_preprocessor;
+import vcs.client.commands;
 
-using vcs::shared::cli_preprocessor::ExecutorArguments;
 using vcs::shared::cli_preprocessor::CliCommandExecutor;
 using vcs::shared::cli_preprocessor::CliActionsContainer;
+using vcs::client::commands::Version;
 
 int main(const int argc, const char* argv[]) {
     const CliCommandExecutor commandExecutor {
@@ -16,19 +15,7 @@ int main(const int argc, const char* argv[]) {
 
     return commandExecutor(CliActionsContainer {
         {
-            {
-                .command = "commit",
-                .arguments {
-                    {
-                        .argument = "--message",
-                        .aliases {"-m", "-M"}
-                    }
-                },
-                .executor = [](const ExecutorArguments& arguments) {
-                    std::cout << "Hello There" << std::endl;
-                    return 0;
-                }
-            }
+            Version
         }
     });
 }

@@ -41,6 +41,7 @@ namespace vcs::shared::cli_preprocessor {
 
             return result;
         }
+
     public:
         explicit CliCommandExecutor(const CliArgs& args) {
             CommandParameters params;
